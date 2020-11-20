@@ -9,7 +9,7 @@ import java.util.Map;
  */
 public class BeanDefinition {
     private String beanClassName;
-    private Map<String, String> propertyValues = new HashMap<String, String>();
+    private Map<String, String> properties = new HashMap<String, String>();
 
     public String getBeanClassName() {
         return beanClassName;
@@ -19,12 +19,16 @@ public class BeanDefinition {
         this.beanClassName = beanClassName;
     }
 
-    public Map<String, String> getPropertyValues() {
-        return propertyValues;
+    public Map<String, String> getProperties() {
+        return properties;
     }
 
-    public void setPropertyValues(Map<String, String> propertyValues) {
-        this.propertyValues = propertyValues;
+    public void setProperties(Map<String, String> properties) {
+        this.properties = properties;
+    }
+
+    public void setPropAndValue(String property, String value){
+        properties.put(property, value);
     }
 
     public BeanDefinition(String beanClassName) {

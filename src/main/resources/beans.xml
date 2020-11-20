@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans>
+    <bean id="wang" class="edu.dlut.easyioc.pojo.Student">
+        <property name="name" value="Xiao Wang" />
+        <property name="age" value="20" />
+        <property name="gender" value="male" />
+    </bean>
+
+    <bean id="ming" class="edu.dlut.easyioc.pojo.Student">
+        <property name="name" value="Wen Ming" />
+        <property name="age" value="19" />
+        <property name="gender" value="female" />
+    </bean>
+</beans>
