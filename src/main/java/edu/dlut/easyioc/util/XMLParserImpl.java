@@ -8,8 +8,10 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Shuxiang Hu
@@ -17,11 +19,11 @@ import java.util.List;
  */
 public class XMLParserImpl implements XMLParser {
     private String xmlPath;
-    private List<BeanDefinition> beanDefinitions;
+    private Map<String, BeanDefinition> beanDefinitions;
 
     public XMLParserImpl(String xmlPath) {
         this.xmlPath = xmlPath;
-        beanDefinitions = new LinkedList<BeanDefinition>();
+        beanDefinitions = new HashMap<String, BeanDefinition>();
     }
 
     public void parse(){
@@ -38,7 +40,11 @@ public class XMLParserImpl implements XMLParser {
             for(int idx = 0, nodeLen=xmlBeanLst.getLength(); idx < nodeLen; idx++){
                 Node beanNode =  xmlBeanLst.item(idx);
                 BeanDefinition tmp = generateBeanDefinition(beanNode);
-                beanDefinitions.add(tmp);
+                NamedNodeMap contextMap = beanNode.getAttributes();
+                Node id = contextMap.getNamedItem("id");
+                Node clazz = contextMap.getNamedItem("class");
+                tmp.setBeanClassName(clazz.getNodeValue());
+                beanDefinitions.put(id.getNodeValue(), tmp);
             }
         }catch (ParserConfigurationException e){
             e.printStackTrace();
@@ -50,12 +56,7 @@ public class XMLParserImpl implements XMLParser {
     }
 
     private BeanDefinition generateBeanDefinition(Node beanNode){
-        NamedNodeMap contextMap = beanNode.getAttributes();
-        Node id = contextMap.getNamedItem("id");
-        Node clazz = contextMap.getNamedItem("class");
-        BeanDefinition tmp = new BeanDefinition(clazz.getNodeValue());
-        tmp.setPropAndValue("id", id.getNodeValue());
-
+        BeanDefinition tmp = new BeanDefinition("");
         NodeList propertiesLst = beanNode.getChildNodes();
         for(int properIdx=0; properIdx<propertiesLst.getLength(); properIdx++){
             Node propertyNode = propertiesLst.item(properIdx);
@@ -69,7 +70,7 @@ public class XMLParserImpl implements XMLParser {
         return tmp;
     }
 
-    public List<BeanDefinition> getBeanDefinitions() {
+    public Map<String, BeanDefinition> getBeanDefinitions() {
         return beanDefinitions;
     }
 }
