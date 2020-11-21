@@ -23,7 +23,8 @@ public class XMLParserImpl implements XMLParser {
 
     public XMLParserImpl(String xmlPath) {
         this.xmlPath = xmlPath;
-        beanDefinitions = new HashMap<String, BeanDefinition>();
+        beanDefinitions = new HashMap<>();
+        parse();
     }
 
     public void parse(){
@@ -46,11 +47,7 @@ public class XMLParserImpl implements XMLParser {
                 tmp.setBeanClassName(clazz.getNodeValue());
                 beanDefinitions.put(id.getNodeValue(), tmp);
             }
-        }catch (ParserConfigurationException e){
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        }catch (ParserConfigurationException | SAXException | IOException e){
             e.printStackTrace();
         }
     }

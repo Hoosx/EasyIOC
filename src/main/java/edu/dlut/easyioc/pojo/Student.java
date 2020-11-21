@@ -2,7 +2,7 @@ package edu.dlut.easyioc.pojo;
 
 /**
  * @author Shuxiang Hu
- * @date 11/20/2020
+ * @date 11/19/2020
  */
 public class Student {
     private String name;
@@ -31,5 +31,14 @@ public class Student {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", gender='" + gender + '\'' +
+                '}';
     }
 }
