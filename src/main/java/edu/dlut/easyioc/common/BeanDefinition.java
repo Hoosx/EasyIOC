@@ -8,8 +8,10 @@ import java.util.Map;
  * @date 11/19/2020
  */
 public class BeanDefinition {
+    private Object bean;
+    private Class<?> beanClass;
     private String beanClassName;
-    private Map<String, String> properties = new HashMap<String, String>();
+    private Map<String, Object> properties;
 
     public String getBeanClassName() {
         return beanClassName;
@@ -17,21 +19,42 @@ public class BeanDefinition {
 
     public void setBeanClassName(String beanClassName) {
         this.beanClassName = beanClassName;
+        try {
+            this.beanClass = Class.forName(beanClassName);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
-    public Map<String, String> getProperties() {
+    public Map<String, Object> getProperties() {
         return properties;
     }
 
-    public void setProperties(Map<String, String> properties) {
+    public void setProperties(Map<String, Object> properties) {
         this.properties = properties;
     }
 
-    public void setPropAndValue(String property, String value){
+    public void setPropAndValue(String property, Object value){
         properties.put(property, value);
     }
 
-    public BeanDefinition(String beanClassName) {
-        this.beanClassName = beanClassName;
+    public Object getBean() {
+        return bean;
+    }
+
+    public void setBean(Object bean) {
+        this.bean = bean;
+    }
+
+    public Class<?> getBeanClass() {
+        return beanClass;
+    }
+
+    public void setBeanClass(Class<?> beanClass) {
+        this.beanClass = beanClass;
+    }
+
+    public BeanDefinition() {
+        properties = new HashMap<>();
     }
 }
