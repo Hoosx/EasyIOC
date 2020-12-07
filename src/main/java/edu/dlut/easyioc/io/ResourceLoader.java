@@ -1,5 +1,7 @@
 package edu.dlut.easyioc.io;
 
+import java.io.IOException;
+
 /**
  * @program: EasyIOC
  * @description
@@ -7,5 +9,11 @@ package edu.dlut.easyioc.io;
  * @create: 2020-12-04 16:11
  **/
 public interface ResourceLoader {
-    Resource getResource(String location);
+    default Resource getResource(String location){
+        return null;
+    };
+
+    default Class[] getResource(Class<?> clazz) throws IOException {
+        return null;
+    }
 }

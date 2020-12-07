@@ -7,5 +7,11 @@ package edu.dlut.easyioc.reader;
  * @create: 2020-12-04 16:19
  **/
 public interface BeanDefinitionReader {
-    void loadBeanDefinitions(String location) throws Exception;
+    default void loadBeanDefinitions(String location) throws Exception {
+//        throw new NotImplementedException();
+    };
+
+    default void loadBeanDefinitions(Class<?> clazz) throws Exception{
+//        throw new NotImplementedException();
+    }
 }
