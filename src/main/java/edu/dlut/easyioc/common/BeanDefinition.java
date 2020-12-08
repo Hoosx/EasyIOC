@@ -57,4 +57,14 @@ public class BeanDefinition {
     public BeanDefinition() {
         properties = new HashMap<>();
     }
+
+    @Override
+    public String toString() {
+        return "BeanDefinition{" +
+                "bean=" + bean +
+                ", beanClass=" + beanClass +
+                ", beanClassName='" + beanClassName + '\'' +
+                ", properties=" + properties +
+                '}';
+    }
 }

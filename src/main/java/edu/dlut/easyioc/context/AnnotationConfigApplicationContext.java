@@ -9,12 +9,16 @@ import edu.dlut.easyioc.reader.AnnotatedBeanDefinitionReader;
 
 import java.util.Map;
 
+import static java.lang.System.exit;
+import static java.lang.System.setOut;
+
 
 /**
  * @author Shuxiang Hu
  * @date 12/07/2020
  */
 public class AnnotationConfigApplicationContext extends AbstractApplicationContext {
+    private Class<?> confiClazz;
 
     public AnnotationConfigApplicationContext(Class<?> clazz) throws Exception {
         this(new AutoWireCapableBeanFactory(), clazz);
@@ -22,12 +26,13 @@ public class AnnotationConfigApplicationContext extends AbstractApplicationConte
 
     private AnnotationConfigApplicationContext(AbstractBeanFactory beanFactory, Class<?> clazz) throws Exception {
         super(beanFactory);
-        this.refresh(clazz);
+        this.confiClazz = clazz;
+        this.refresh();
     }
-
-    void refresh(Class<?> clazz) throws Exception {
+    @Override
+    public void refresh() throws Exception {
         AbstractBeanDefinitionReader abdr = new AnnotatedBeanDefinitionReader(new AnnotatedResourceLoader());
-        abdr.loadBeanDefinitions(clazz);
+        abdr.loadBeanDefinitions(confiClazz);
         for (Map.Entry<String, BeanDefinition> beanDefinitionEntry : abdr.getRegistry().entrySet()) {
             beanFactory.registerBeanDefinition(beanDefinitionEntry.getKey(), beanDefinitionEntry.getValue());
         }

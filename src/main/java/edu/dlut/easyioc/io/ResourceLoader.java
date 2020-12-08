@@ -1,6 +1,7 @@
 package edu.dlut.easyioc.io;
 
 import java.io.IOException;
+import java.util.Set;
 
 /**
  * @program: EasyIOC
@@ -13,7 +14,7 @@ public interface ResourceLoader {
         return null;
     };
 
-    default Class[] getResource(Class<?> clazz) throws IOException {
+    default Set<Class<?>> getResource(Class<?> clazz) throws IOException {
         return null;
     }
 }

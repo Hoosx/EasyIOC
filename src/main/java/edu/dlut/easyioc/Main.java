@@ -2,7 +2,7 @@ package edu.dlut.easyioc;
 
 import edu.dlut.easyioc.context.AbstractApplicationContext;
 import edu.dlut.easyioc.context.AnnotationConfigApplicationContext;
-import edu.dlut.easyioc.context.ClassPathXmlApplicationContext;
+import edu.dlut.easyioc.pojo.AnnotationBeanConfig;
 import edu.dlut.easyioc.pojo.Student;
 
 /**
@@ -13,12 +13,12 @@ import edu.dlut.easyioc.pojo.Student;
  **/
 public class Main {
     public static void main(String[] args) throws Exception {
-        AbstractApplicationContext ac = new ClassPathXmlApplicationContext("beans.xml");
-//        AbstractApplicationContext aca = new AnnotationConfigApplicationContext(Main.class);
-        Student wang = (Student) ac.getBean("wang");
-        Student ming = (Student) ac.getBean("ming");
-
+//        AbstractApplicationContext ac = new ClassPathXmlApplicationContext("beans.xml");
+        AbstractApplicationContext aca = new AnnotationConfigApplicationContext(AnnotationBeanConfig.class);
+        Student wang = (Student) aca.getBean("student");
+//        Student ming = (Student) ac.getBean("ming");
+//
         System.out.println(wang);
-        System.out.println(ming);
+//        System.out.println(ming);
     }
 }

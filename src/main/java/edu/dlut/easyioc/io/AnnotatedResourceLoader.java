@@ -1,33 +1,28 @@
 package edu.dlut.easyioc.io;
 
 
-import edu.dlut.easyioc.Main;
-import edu.dlut.easyioc.annotation.Configuration;
+import edu.dlut.easyioc.annotation.Component;
+import edu.dlut.easyioc.annotation.ComponentScan;
+import org.reflections.Reflections;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.Enumeration;
+import java.util.Set;
 
 /**
  * @author Shuxiang Hu
  * @date 12/07/2020
  */
 public class AnnotatedResourceLoader implements ResourceLoader {
-    public static void main(String[] args) throws IOException {
-        AnnotatedResourceLoader arl = new AnnotatedResourceLoader();
-        arl.getResource(Main.class);
-    }
+//    public static void main(String[] args) throws IOException {
+//        AnnotatedResourceLoader arl = new AnnotatedResourceLoader();
+//        arl.getResource(BeanConfig.class);
+//    }
 
     @Override
-    public Class[] getResource(Class<?> clazz) throws IOException {
-        assert clazz.isAnnotationPresent(Configuration.class);
-        String pth = clazz.getResource("").getPath();
-        System.out.println(pth);
-        Enumeration<URL> clazzs = clazz.getClassLoader().getResources(pth);
-        while (clazzs.hasMoreElements()){
-            URL url = clazzs.nextElement();
-            System.out.println(url.getPath());
-        }
-        return null;
+    public Set<Class<?>> getResource(Class<?> clazz) throws IOException {
+        assert clazz.isAnnotationPresent(ComponentScan.class);
+        Reflections annotationScanned = new Reflections(clazz.getPackageName());
+        Set<Class<?>> componentClazzSet = annotationScanned.getTypesAnnotatedWith(Component.class);
+        return componentClazzSet;
     }
 }

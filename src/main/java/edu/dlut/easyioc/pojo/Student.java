@@ -1,13 +1,25 @@
 package edu.dlut.easyioc.pojo;
 
+import edu.dlut.easyioc.annotation.AutoWired;
+import edu.dlut.easyioc.annotation.Component;
+import edu.dlut.easyioc.annotation.Value;
+
 /**
  * @author Shuxiang Hu
  * @date 11/19/2020
  */
+@Component
 public class Student {
+    @Value(value = "hu")
     private String name;
     private int age;
     private String gender;
+
+    @AutoWired
+    public Pencil pencil;
+
+    public Student() {
+    }
 
     public String getName() {
         return name;
@@ -42,3 +54,4 @@ public class Student {
                 '}';
     }
 }
+
