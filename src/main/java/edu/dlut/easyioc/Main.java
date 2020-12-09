@@ -13,7 +13,7 @@ import edu.dlut.easyioc.pojo.Student;
  **/
 public class Main {
     public static void main(String[] args) throws Exception {
-        AbstractApplicationContext ac = new ClassPathXmlApplicationContext("beans.xml");
+        AbstractApplicationContext ac = new ClassPathXmlApplicationContext("xml/beans.xml");
 //        AbstractApplicationContext aca = new AnnotationConfigApplicationContext(Main.class);
         Student wang = (Student) ac.getBean("wang");
         Student ming = (Student) ac.getBean("ming");
