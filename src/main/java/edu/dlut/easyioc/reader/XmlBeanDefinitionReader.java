@@ -28,6 +28,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader{
     public void loadBeanDefinitions(String location) throws Exception {
         InputStream inputStream = getResourceLoader().getResource(location).getInputStream();
         doLoadBeanDefinitions(inputStream);
+        inputStream.close();
     }
 
     private void doLoadBeanDefinitions(InputStream inputStream) throws Exception {
@@ -35,7 +36,6 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader{
         DocumentBuilder docBuilder = factory.newDocumentBuilder();
         Document document = docBuilder.parse(inputStream);
         registerBeanDefinitions(document);
-        inputStream.close();
     }
 
     private void registerBeanDefinitions(Document document) {

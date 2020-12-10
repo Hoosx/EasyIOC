@@ -1,8 +1,6 @@
 package edu.dlut.easyioc.reader;
 
-import edu.dlut.easyioc.annotation.AutoWired;
-import edu.dlut.easyioc.annotation.Component;
-import edu.dlut.easyioc.annotation.Value;
+import edu.dlut.easyioc.annotation.*;
 import edu.dlut.easyioc.common.BeanDefinition;
 import edu.dlut.easyioc.common.BeanReference;
 import edu.dlut.easyioc.io.ResourceLoader;
@@ -10,6 +8,8 @@ import edu.dlut.easyioc.io.ResourceLoader;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Set;
 
 /**
@@ -22,11 +22,34 @@ public class AnnotatedBeanDefinitionReader extends AbstractBeanDefinitionReader 
     }
 
     @Override
-    public void loadBeanDefinitions(Class<?> clazz) throws IOException {
+    public void loadBeanDefinitions(Class<?> clazz) throws IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         // Resource for annotation type is not handled yet.
         Set<Class<?>> components = getResourceLoader().getResource(clazz);
         for (Class<?> component:components){
             registerBeanDefinition(component);
+            if (component.getDeclaredAnnotation(Configuration.class) != null) {
+                registerConfiguration(component);
+            }
+        }
+    }
+
+    private void registerConfiguration(Class<?> component) throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+        Method[] methods = component.getDeclaredMethods();
+        for (Method method : methods) {
+            Bean beanAnnotation = method.getDeclaredAnnotation(Bean.class);
+            if (beanAnnotation != null) {
+                Object obj = component.getDeclaredConstructor().newInstance();
+                method.setAccessible(true);
+                Object bean = method.invoke(obj);
+                BeanDefinition beanDefinition = new BeanDefinition();
+                beanDefinition.setBeanClassName(bean.getClass().getName());
+                beanDefinition.setBean(bean);
+                if (beanAnnotation.value().equals("")) {
+                    getRegistry().put(getDefaultName(bean.getClass()), beanDefinition);
+                } else {
+                    getRegistry().put(((Bean) bean).value(), beanDefinition);
+                }
+            }
         }
     }
 
@@ -47,8 +70,12 @@ public class AnnotatedBeanDefinitionReader extends AbstractBeanDefinitionReader 
             }
         }
         // TODO: add support for more annotations
+        getRegistry().put(getDefaultName(componentClazz), beanDefinition);
+    }
+
+    private String getDefaultName(Class<?> componentClazz) {
         String beanName = componentClazz.getSimpleName();
         Character firstLetter = beanName.charAt(0);
-        getRegistry().put(beanName.replaceFirst(firstLetter.toString(), firstLetter.toString().toLowerCase()), beanDefinition);
+        return beanName.replaceFirst(firstLetter.toString(), firstLetter.toString().toLowerCase());
     }
 }

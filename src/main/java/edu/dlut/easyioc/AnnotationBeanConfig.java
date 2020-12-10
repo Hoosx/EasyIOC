@@ -1,4 +1,4 @@
-package edu.dlut.easyioc.pojo;
+package edu.dlut.easyioc;
 
 import edu.dlut.easyioc.annotation.ComponentScan;
 

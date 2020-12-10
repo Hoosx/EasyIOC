@@ -1,7 +1,10 @@
 package edu.dlut.easyioc.pojo;
 
 import edu.dlut.easyioc.annotation.Component;
+import edu.dlut.easyioc.annotation.Configuration;
 import edu.dlut.easyioc.annotation.Value;
+import edu.dlut.easyioc.context.AbstractApplicationContext;
+import edu.dlut.easyioc.context.AnnotationConfigApplicationContext;
 
 /**
  * @author Shuxiang Hu
@@ -19,4 +22,5 @@ public class Pencil{
     public void setName(String name) {
         this.name = name;
     }
+
 }

@@ -3,6 +3,7 @@ package edu.dlut.easyioc.io;
 
 import edu.dlut.easyioc.annotation.Component;
 import edu.dlut.easyioc.annotation.ComponentScan;
+import edu.dlut.easyioc.annotation.Configuration;
 import org.reflections.Reflections;
 
 import java.io.IOException;
