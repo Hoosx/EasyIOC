@@ -14,16 +14,13 @@ import java.util.Set;
  * @date 12/07/2020
  */
 public class AnnotatedResourceLoader implements ResourceLoader {
-//    public static void main(String[] args) throws IOException {
-//        AnnotatedResourceLoader arl = new AnnotatedResourceLoader();
-//        arl.getResource(BeanConfig.class);
-//    }
-
     @Override
     public Set<Class<?>> getResource(Class<?> clazz) throws IOException {
         assert clazz.isAnnotationPresent(ComponentScan.class);
         Reflections annotationScanned = new Reflections(clazz.getPackageName());
         Set<Class<?>> componentClazzSet = annotationScanned.getTypesAnnotatedWith(Component.class);
+        Set<Class<?>> configClazzSet = annotationScanned.getTypesAnnotatedWith(Configuration.class);
+        componentClazzSet.addAll(configClazzSet);
         return componentClazzSet;
     }
 }

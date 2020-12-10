@@ -69,7 +69,6 @@ public class AnnotatedBeanDefinitionReader extends AbstractBeanDefinitionReader 
                 }
             }
         }
-        // TODO: add support for more annotations
         getRegistry().put(getDefaultName(componentClazz), beanDefinition);
     }
 

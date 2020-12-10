@@ -1,4 +1,4 @@
-package edu.dlut.easyioc;
+package edu.dlut.easyioc.pojo;
 
 import edu.dlut.easyioc.annotation.ComponentScan;
 
@@ -7,6 +7,6 @@ import edu.dlut.easyioc.annotation.ComponentScan;
  * @date 12/7/2020
  */
 @ComponentScan
-public class AnnotationBeanConfig {
+public class AnnotationBeanScan {
 
 }
