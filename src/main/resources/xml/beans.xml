@@ -10,5 +10,9 @@
         <property name="name" value="Wen Ming" />
         <property name="age" value="19" />
         <property name="gender" value="female" />
+        <property name="pencil" ref="pencil" />
+    </bean>
+    <bean id="pencil" class="edu.dlut.easyioc.pojo.Pencil">
+        <property name="name" value="Chen Guang" />
     </bean>
 </beans>

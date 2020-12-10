@@ -16,7 +16,7 @@ public class Student {
     private String gender;
 
     @AutoWired
-    public Pencil pencil;
+    private Pencil pencil;
 
     public Student() {
     }
@@ -43,6 +43,18 @@ public class Student {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public Pencil getPencil() {
+        return pencil;
+    }
+
+    public void setPencil(Pencil pencil) {
+        this.pencil = pencil;
+    }
+
+    public void write(){
+        System.out.println(this.name + " writes with " + pencil.getName());
     }
 
     @Override

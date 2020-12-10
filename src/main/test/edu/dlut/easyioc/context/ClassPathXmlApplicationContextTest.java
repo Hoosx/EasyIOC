@@ -17,5 +17,6 @@ public class ClassPathXmlApplicationContextTest {
         assertEquals(ming.getAge(), 19);
         assertEquals(wang.getGender(), "male");
         assertEquals(ming.getGender(), "female");
+        assertEquals(ming.getPencil().getName(), "Chen Guang");
     }
 }
